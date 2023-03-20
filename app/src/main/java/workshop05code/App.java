@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -35,6 +36,8 @@ public class App {
      */
     public static void main(String[] args) {
         SQLiteConnectionManager wordleDatabaseConnection = new SQLiteConnectionManager("words.db");
+
+
 
         wordleDatabaseConnection.createNewDatabase("words.db");
         if (wordleDatabaseConnection.checkIfConnectionDefined()) {
@@ -73,6 +76,10 @@ public class App {
             System.out.print("Enter a 4 letter word for a guess or q to quit: ");
             String guess = scanner.nextLine();
 
+            // Pattern pattern = '/[A-Z0-9&_\.-]/';
+
+            if(!guess.matches("[^-_=+\\\\|\\[{\\]};:'\",<>/*A-Z0-9.]")){
+
             while (!guess.equals("q")) {
                 System.out.println("You've guessed '" + guess+"'.");
 
@@ -85,8 +92,11 @@ public class App {
                 System.out.print("Enter a 4 letter word for a guess or q to quit: " );
                 guess = scanner.nextLine();
             }
-        } catch (NoSuchElementException | IllegalStateException e) {
+        } else {
+         catch (NoSuchElementException | IllegalStateException e) {
             e.printStackTrace();
+        
+    }
         }
 
     }
